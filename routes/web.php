@@ -15,4 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('helo', 'HeloController');
+Route::resource('helo', 'HeloController', ['only' => ['index', 'store']]);

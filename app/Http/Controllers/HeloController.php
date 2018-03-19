@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
 class HeloController extends Controller
 {
@@ -12,9 +11,12 @@ class HeloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('helo', ['message' => 'please type...']);
+        $res = 'URL : ' . $request->url()
+        . '<br>Long URL : ' . $request->fullUrl()
+        . '<br>PATH : ' . $request->path();
+    	return view('helo', ['message' => $res]);
     }
 
     /**
