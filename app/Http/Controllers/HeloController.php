@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\LaravelList;
 
 class HeloController extends Controller
 {
@@ -11,12 +12,10 @@ class HeloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $res = 'URL : ' . $request->url()
-        . '<br>Long URL : ' . $request->fullUrl()
-        . '<br>PATH : ' . $request->path();
-    	return view('helo', ['message' => $res]);
+       $data = LaravelList::all();
+    	return view('helo', ['message' => 'LaravelList','data' => $data]);
     }
 
     /**

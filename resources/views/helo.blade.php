@@ -1,14 +1,16 @@
 @extends('layouts.master')
 @section('content')
-	<style>
-    	body { color:gray; }
-    	h1 { font-size:18pt; font-weight:bold; }
-    </style>
 	<h1>Sample</h1>
-    <p>{!! $message !!}</p>
-    <form method="post" action="/helo">
-		{{ csrf_field() }}
-        <input type="text" name="str">
-        <input type="submit">
-    </form>
+    <p><?php echo $message; ?></p>
+    <table>
+    <tr><th>ID</th><th>NAME</th><th>MAIL</th><th>AGE</th></tr>
+    <?php foreach($data as $val){ ?>
+    <tr>
+        <td><?php echo $val->id; ?></td>
+        <td><?php echo $val->name; ?></td>
+        <td><?php echo $val->mail; ?></td>
+        <td><?php echo $val->age; ?></td>
+    </tr>
+    <?php } ?>
+    </table>
 @stop
