@@ -12,20 +12,11 @@ class HeloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-       $data = LaravelList::all();
-    	return view('helo', ['message' => 'LaravelList','data' => $data]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+		$id = $request->id;
+		$data = LaravelList::where('id', $id)->get();
+		return view('helo', ['message' => 'MyTable List','data' => $data]);
     }
 
     /**
@@ -39,49 +30,42 @@ class HeloController extends Controller
         $res = "you typed: " . $request->input('str');
         return view('helo', ['message' => $res]);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+	
+	public function getNew(Request $request)
     {
-        //
+		return view('new', ['message' => 'MyTable Create']);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+	
+	public function postNew(Request $request)
     {
-        //
+		$name = $request->input('name');
+		$mail = $request->input('mail');
+		$age = $request->input('age');
+		$data = array(
+			'name' => $name,
+			'mail' => $mail,
+			'age' => $age
+		);
+		LaravelList::create($data);
+		return redirect()->action('HeloController@index');
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+	
+	public function getUpdate(Request $request)
     {
-        //
+		$id = $request->id;
+		$data = LaravelList::find($id);
+		$msg = 'MyTable Update [id = ' . $id . ']';
+		return view('update', ['message' => $msg,'data' => $data]);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+	
+	public function postUpdate(Request $request)
     {
-        //
+		$id = $request->input('id');
+		$data = LaravelList::find($id);
+		$data->name = $request->input('name');
+		$data->mail = $request->input('mail');
+		$data->age = $request->input('age');
+		$data->save();
+		return redirect()->action('HeloController@index',['id' => $id]);
     }
 }

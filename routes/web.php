@@ -16,3 +16,8 @@ Route::get('/', function () {
 });
 
 Route::resource('helo', 'HeloController', ['only' => ['index', 'store']]);
+Route::get('helo/new', 'HeloController@getNew');
+Route::post('helo/new', 'HeloController@postNew');
+
+Route::get('helo/update', 'HeloController@getUpdate');
+Route::post('helo/update', 'HeloController@postUpdate');
